@@ -1,0 +1,62 @@
+<div class="personas-page">
+  <header class="personas-page__header">
+    <h1 class="personas-page__title">Personas</h1>
+    <a class="personas-page__new" routerLink="/personas/nueva">+ Nueva persona</a>
+  </header>
+
+  @if (!loading() && !errorMessage() && personas().length > 0) {
+    <div class="personas-page__filters">
+      <input
+        type="text"
+        class="personas-page__search"
+        placeholder="Buscar por número de control, nombre, apellidos, barrio o sección…"
+        aria-label="Buscar personas"
+        [value]="busqueda()"
+        (input)="busqueda.set($any($event.target).value)"
+      />
+      <select aria-label="Filtrar por estatus" [value]="filtroEstatus()" (change)="filtroEstatus.set($any($event.target).value)">
+        <option value="">Todos los estatus</option>
+        @for (opcion of estatusOptions; track opcion) {
+          <option [value]="opcion">{{ opcion }}</option>
+        }
+      </select>
+    </div>
+  }
+
+  @if (loading()) {
+    <p class="personas-page__hint">Cargando…</p>
+  } @else if (errorMessage()) {
+    <p class="personas-page__error">{{ errorMessage() }}</p>
+  } @else if (personas().length === 0) {
+    <p class="personas-page__hint">Aún no hay personas registradas.</p>
+  } @else if (personasFiltradas().length === 0) {
+    <p class="personas-page__hint">Ninguna persona coincide con la búsqueda.</p>
+  } @else {
+    <table class="personas-table">
+      <thead>
+        <tr>
+          <th>Número de control</th>
+          <th>Nombre</th>
+          <th>Comunidad</th>
+          <th>Teléfono</th>
+          <th>Estatus</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (persona of personasFiltradas(); track persona.id) {
+          <tr>
+            <td>{{ persona.numeroControl }}</td>
+            <td>{{ persona.nombre }} {{ persona.apellidoPaterno }} {{ persona.apellidoMaterno }}</td>
+            <td>{{ nombreComunidad(persona.comunidadId) }}</td>
+            <td>{{ persona.telefono || '—' }}</td>
+            <td>
+              <span class="personas-badge" [class.personas-badge--inactive]="persona.estatus !== 'ACTIVO'">
+                {{ persona.estatus }}
+              </span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

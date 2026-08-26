@@ -1,0 +1,71 @@
+<div class="comunidad-page">
+  <form class="comunidad-card" [formGroup]="comunidadForm" (ngSubmit)="onSubmit()">
+    <a class="comunidad-card__back" routerLink="/comunidades">‹ Volver al listado</a>
+    <h1 class="comunidad-card__title">Nueva comunidad</h1>
+
+    <label class="comunidad-card__field">
+      <span>Clave</span>
+      <input type="text" formControlName="clave" maxlength="30" />
+    </label>
+
+    <label class="comunidad-card__field">
+      <span>Nombre</span>
+      <input type="text" formControlName="nombre" maxlength="150" />
+    </label>
+
+    <label class="comunidad-card__field">
+      <span>Municipio</span>
+      <input type="text" formControlName="municipio" maxlength="120" />
+    </label>
+
+    <label class="comunidad-card__field">
+      <span>Estado</span>
+      <input type="text" formControlName="estado" maxlength="120" />
+    </label>
+
+    <label class="comunidad-card__field">
+      <span>Dirección</span>
+      <input type="text" formControlName="direccion" maxlength="255" />
+    </label>
+
+    <label class="comunidad-card__field">
+      <span>Teléfono</span>
+      <input type="tel" formControlName="telefono" maxlength="30" />
+    </label>
+
+    <label class="comunidad-card__field">
+      <span>Correo</span>
+      <input type="email" formControlName="email" maxlength="150" />
+    </label>
+
+    <label class="comunidad-card__field">
+      <span>Código postal</span>
+      <input type="text" formControlName="codigoPostal" maxlength="10" />
+    </label>
+
+    <label class="comunidad-card__field">
+      <span>Descripción</span>
+      <textarea formControlName="descripcion" rows="3"></textarea>
+    </label>
+
+    <label class="comunidad-card__checkbox">
+      <input type="checkbox" formControlName="activo" />
+      <span>Activa</span>
+    </label>
+
+    @if (errorMessage()) {
+      <p class="comunidad-card__error">{{ errorMessage() }}</p>
+    }
+
+    @if (successMessage()) {
+      <p class="comunidad-card__success">{{ successMessage() }}</p>
+    }
+
+    <div class="comunidad-card__actions">
+      <button type="button" class="comunidad-card__cancel" (click)="onCancel()">Cancelar</button>
+      <button type="submit" class="comunidad-card__submit" [disabled]="comunidadForm.invalid || loading()">
+        {{ loading() ? 'Guardando…' : 'Guardar' }}
+      </button>
+    </div>
+  </form>
+</div>

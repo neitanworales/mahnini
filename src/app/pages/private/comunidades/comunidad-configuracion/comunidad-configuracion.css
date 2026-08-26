@@ -1,0 +1,215 @@
+.config-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+.config-page__back {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: #6b7280;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.config-page__back:hover {
+  color: #111827;
+}
+
+.config-page__error {
+  color: #b91c1c;
+  font-size: 0.9rem;
+}
+
+.config-page__header {
+  margin-bottom: 1.5rem;
+}
+
+.config-page__title {
+  margin: 0 0 0.25rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.config-page__subtitle {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.config-page__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.config-card--full {
+  margin-bottom: 1.5rem;
+}
+
+.config-datos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem 1.25rem;
+}
+
+.config-datos__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+
+.config-datos__field--full {
+  grid-column: 1 / -1;
+}
+
+.config-datos__field input,
+.config-datos__field textarea {
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.65rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+.config-datos__field textarea {
+  resize: vertical;
+}
+
+.config-datos__field input:focus,
+.config-datos__field textarea:focus {
+  outline: none;
+  border-color: #111827;
+}
+
+.config-datos__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #4b5563;
+}
+
+.config-datos__success {
+  color: #15803d;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.config-datos__submit {
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.55rem 0.9rem;
+  font-size: 0.85rem;
+  background: #111827;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.config-datos__submit:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.config-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.config-card__title {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.config-card__form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.config-card__form input {
+  flex: 1;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.65rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+.config-card__form input:focus {
+  outline: none;
+  border-color: #111827;
+}
+
+.config-card__form button {
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.85rem;
+  background: #111827;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.config-card__form button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.config-card__error {
+  color: #b91c1c;
+  font-size: 0.8rem;
+  margin: 0 0 0.75rem;
+}
+
+.config-card__hint {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.config-card__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.config-card__list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.9rem;
+  color: #111827;
+}
+
+.config-card__list li:last-child {
+  border-bottom: none;
+}
+
+.config-card__remove {
+  border: none;
+  background: none;
+  color: #b91c1c;
+  font-size: 0.8rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+@media (max-width: 640px) {
+  .config-page__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .config-datos {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,52 @@
+<header class="app-header">
+  <div class="app-header__inner">
+    <a class="app-header__brand" routerLink="/home">Mahnini</a>
+
+    <nav class="app-header__nav">
+      <a class="app-header__link" routerLink="/home" routerLinkActive="is-active">Home</a>
+      <a class="app-header__link" routerLink="/dashboard" routerLinkActive="is-active">Dashboard</a>
+      @if (currentUser()) {
+        <a class="app-header__link" routerLink="/expediente" routerLinkActive="is-active">Expediente</a>
+      }
+      @if (currentRole()?.nombre === 'SUPERADMIN') {
+        <a class="app-header__link" routerLink="/comunidades" routerLinkActive="is-active">Comunidades</a>
+      }
+      @if (canManageAdmin()) {
+        <a class="app-header__link" routerLink="/personas" routerLinkActive="is-active">Personas</a>
+        <a class="app-header__link" routerLink="/usuarios" routerLinkActive="is-active">Usuarios</a>
+      }
+    </nav>
+
+    <div class="user-menu">
+      <button
+        type="button"
+        class="user-menu__trigger"
+        (click)="toggleMenu($event)"
+        [attr.aria-expanded]="isMenuOpen()"
+        aria-label="Cuenta"
+      >
+        <svg class="user-menu__icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12Zm0 2.5c-3.4 0-9.9 1.7-9.9 5.1v2.2h19.8v-2.2c0-3.4-6.5-5.1-9.9-5.1Z"
+          />
+        </svg>
+      </button>
+
+      @if (isMenuOpen()) {
+        <div class="user-menu__panel" (click)="stopPropagation($event)">
+          @if (currentUser(); as user) {
+            @if (currentPersona(); as persona) {
+              <p class="user-menu__name">{{ persona.nombre }} {{ persona.apellidoPaterno }}</p>
+            }
+            @if (user.email) {
+              <p class="user-menu__email">{{ user.email }}</p>
+            }
+            <button type="button" class="btn btn--secondary" (click)="logout()">Cerrar sesión</button>
+          } @else {
+            <a class="btn btn--primary" routerLink="/login" (click)="closeMenu()">Iniciar sesión</a>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</header>

@@ -1,0 +1,362 @@
+.expediente-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+.expediente-page__title {
+  margin: 0 0 1.25rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.expediente-page__hint {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.expediente-page__error {
+  color: #b91c1c;
+  font-size: 0.9rem;
+}
+
+.expediente-search {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.expediente-search__input {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.expediente-search__input:focus {
+  outline: none;
+  border-color: #111827;
+}
+
+.expediente-search__results {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.expediente-search__result {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  background: #ffffff;
+  padding: 0.65rem 0.85rem;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.expediente-search__result:last-child {
+  border-bottom: none;
+}
+
+.expediente-search__result:hover {
+  background: #f9fafb;
+}
+
+.expediente-search__result strong {
+  color: #111827;
+  font-size: 0.95rem;
+}
+
+.expediente-search__result span {
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+.expediente-detalle {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.expediente-detalle__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.expediente-detalle__nombre {
+  margin: 0 0 0.25rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.expediente-detalle__meta {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.expediente-detalle__cerrar {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  background: #f3f4f6;
+  color: #111827;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.expediente-detalle__tarjeta {
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  background: #ffffff;
+  color: #111827;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: inherit;
+  margin-right: 0.5rem;
+}
+
+.expediente-detalle__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.expediente-datos h3,
+.expediente-balance h3,
+.expediente-section h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.expediente-datos dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.4rem 0.75rem;
+  margin: 0;
+}
+
+.expediente-datos dt {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.expediente-datos dd {
+  margin: 0;
+  color: #111827;
+  font-size: 0.85rem;
+}
+
+.expediente-balance__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.expediente-balance__card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 0.6rem 0.85rem;
+  background: #f9fafb;
+}
+
+.expediente-balance__card--danger {
+  background: #fef2f2;
+  border-color: #fecaca;
+}
+
+.expediente-balance__label {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.expediente-balance__value {
+  color: #111827;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.expediente-section {
+  margin-bottom: 1.75rem;
+}
+
+.expediente-section:last-child {
+  margin-bottom: 0;
+}
+
+.expediente-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.expediente-table th,
+.expediente-table td {
+  text-align: left;
+  padding: 0.55rem 0.6rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.expediente-table th {
+  color: #6b7280;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.expediente-table td {
+  color: #111827;
+}
+
+.tarjeta {
+  position: relative;
+  max-width: 380px;
+  margin: 0 auto;
+  border: 2px solid #111827;
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  background: #ffffff;
+}
+
+.tarjeta__imprimir {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  background: #f9fafb;
+  color: #111827;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.tarjeta__header {
+  text-align: center;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 2px solid #111827;
+}
+
+.tarjeta__marca {
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #111827;
+}
+
+.tarjeta__nombre {
+  margin: 0;
+  font-weight: 600;
+  color: #111827;
+}
+
+.tarjeta__clave {
+  margin: 0.15rem 0 0;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.tarjeta__titulo {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #111827;
+}
+
+.tarjeta__seccion {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tarjeta__seccion:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.tarjeta__seccion h4 {
+  margin: 0 0 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.tarjeta__fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #111827;
+  padding: 0.15rem 0;
+}
+
+.tarjeta__vacio {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+.tarjeta__check--ok {
+  color: #15803d;
+  font-weight: 700;
+}
+
+.tarjeta__check--mal {
+  color: #b91c1c;
+  font-weight: 700;
+}
+
+.tarjeta__multa {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.tarjeta__obra-nombre {
+  margin: 0 0 0.3rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+@media print {
+  .expediente-section--no-print {
+    display: none !important;
+  }
+
+  .tarjeta {
+    border: 2px solid #000000;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .expediente-detalle__grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,20 @@
+<section class="dashboard">
+  <header class="dashboard__header">
+    <div>
+      <p class="dashboard__eyebrow">Panel de administración</p>
+      <h1 class="dashboard__title">Hola, {{ user()?.email }}</h1>
+    </div>
+    @if (role(); as r) {
+      <span class="dashboard__badge">{{ r.nombre }}</span>
+    }
+  </header>
+
+  <div class="dashboard__grid">
+    @for (section of sections(); track section.label) {
+      <a class="dashboard-card" [class.dashboard-card--disabled]="!section.route" [routerLink]="section.route ?? null">
+        <h2 class="dashboard-card__title">{{ section.label }}</h2>
+        <p class="dashboard-card__description">{{ section.description }}</p>
+      </a>
+    }
+  </div>
+</section>

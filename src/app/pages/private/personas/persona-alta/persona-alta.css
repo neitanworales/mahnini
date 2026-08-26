@@ -1,0 +1,124 @@
+.persona-page {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+}
+
+.persona-card {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 2rem;
+}
+
+.persona-card__back {
+  align-self: flex-start;
+  color: #6b7280;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.persona-card__back:hover {
+  color: #111827;
+}
+
+.persona-card__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  text-align: center;
+}
+
+.persona-card__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem 1.25rem;
+}
+
+.persona-card__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+
+.persona-card__field--full {
+  grid-column: 1 / -1;
+}
+
+.persona-card__field input,
+.persona-card__field select,
+.persona-card__field textarea {
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.65rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.persona-card__field input:focus,
+.persona-card__field select:focus,
+.persona-card__field textarea:focus {
+  outline: none;
+  border-color: #111827;
+}
+
+.persona-card__field textarea {
+  resize: vertical;
+}
+
+.persona-card__error {
+  color: #b91c1c;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.persona-card__success {
+  color: #15803d;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.persona-card__actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.persona-card__cancel,
+.persona-card__submit {
+  flex: 1;
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.persona-card__cancel {
+  background: #f3f4f6;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+}
+
+.persona-card__submit {
+  background: #111827;
+  color: #ffffff;
+}
+
+.persona-card__submit:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+@media (max-width: 560px) {
+  .persona-card__grid {
+    grid-template-columns: 1fr;
+  }
+}

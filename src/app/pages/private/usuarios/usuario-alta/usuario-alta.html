@@ -1,0 +1,71 @@
+<div class="usuario-page">
+  <form class="usuario-card" [formGroup]="usuarioForm" (ngSubmit)="onSubmit()">
+    <a class="usuario-card__back" routerLink="/usuarios">‹ Volver al listado</a>
+    <h1 class="usuario-card__title">Nuevo usuario</h1>
+
+    <div class="usuario-card__grid">
+      <label class="usuario-card__field">
+        <span>Comunidad</span>
+        <select formControlName="comunidadId">
+          <option [ngValue]="null" disabled>Selecciona una comunidad</option>
+          @for (comunidad of comunidades(); track comunidad.id) {
+            <option [ngValue]="comunidad.id">{{ comunidad.nombre }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="usuario-card__field">
+        <span>Rol</span>
+        <select formControlName="rolId">
+          <option [ngValue]="null" disabled>Selecciona un rol</option>
+          @for (rol of roles(); track rol.id) {
+            <option [ngValue]="rol.id">{{ rol.nombre }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="usuario-card__field usuario-card__field--full">
+        <span>Persona relacionada (opcional)</span>
+        <select formControlName="personaId">
+          <option [ngValue]="null">Sin relación</option>
+          @for (persona of personas(); track persona.id) {
+            <option [ngValue]="persona.id">{{ persona.nombre }} {{ persona.apellidoPaterno }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="usuario-card__field usuario-card__field--full">
+        <span>Correo</span>
+        <input type="email" formControlName="email" maxlength="150" />
+      </label>
+
+      <label class="usuario-card__field usuario-card__field--full">
+        <span>Contraseña</span>
+        <input type="password" formControlName="password" autocomplete="new-password" />
+        <small class="usuario-card__hint">
+          Mínimo 12 caracteres, con mayúscula, minúscula, número, carácter especial y sin espacios.
+        </small>
+      </label>
+
+      <label class="usuario-card__checkbox usuario-card__field--full">
+        <input type="checkbox" formControlName="activo" />
+        <span>Activo</span>
+      </label>
+    </div>
+
+    @if (errorMessage()) {
+      <p class="usuario-card__error">{{ errorMessage() }}</p>
+    }
+
+    @if (successMessage()) {
+      <p class="usuario-card__success">{{ successMessage() }}</p>
+    }
+
+    <div class="usuario-card__actions">
+      <button type="button" class="usuario-card__cancel" (click)="onCancel()">Cancelar</button>
+      <button type="submit" class="usuario-card__submit" [disabled]="usuarioForm.invalid || loading()">
+        {{ loading() ? 'Guardando…' : 'Guardar' }}
+      </button>
+    </div>
+  </form>
+</div>

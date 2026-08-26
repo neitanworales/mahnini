@@ -1,0 +1,116 @@
+<div class="persona-page">
+  <form class="persona-card" [formGroup]="personaForm" (ngSubmit)="onSubmit()">
+    <a class="persona-card__back" routerLink="/personas">‹ Volver al listado</a>
+    <h1 class="persona-card__title">Nueva persona</h1>
+
+    <div class="persona-card__grid">
+      <label class="persona-card__field">
+        <span>Comunidad</span>
+        @if (isSuperAdmin()) {
+          <select formControlName="comunidadId">
+            <option [ngValue]="null" disabled>Selecciona una comunidad</option>
+            @for (comunidad of comunidades(); track comunidad.id) {
+              <option [ngValue]="comunidad.id">{{ comunidad.nombre }}</option>
+            }
+          </select>
+        } @else {
+          <input type="text" [value]="comunidadNombre()" disabled />
+        }
+      </label>
+
+      <label class="persona-card__field">
+        <span>Número de control</span>
+        <input type="text" formControlName="numeroControl" maxlength="40" />
+      </label>
+
+      <label class="persona-card__field">
+        <span>Nombre</span>
+        <input type="text" formControlName="nombre" maxlength="100" />
+      </label>
+
+      <label class="persona-card__field">
+        <span>Apellido paterno</span>
+        <input type="text" formControlName="apellidoPaterno" maxlength="100" />
+      </label>
+
+      <label class="persona-card__field">
+        <span>Apellido materno</span>
+        <input type="text" formControlName="apellidoMaterno" maxlength="100" />
+      </label>
+
+      <label class="persona-card__field">
+        <span>Fecha de nacimiento</span>
+        <input type="date" formControlName="fechaNacimiento" />
+      </label>
+
+      <label class="persona-card__field">
+        <span>Teléfono</span>
+        <input type="tel" formControlName="telefono" maxlength="30" />
+      </label>
+
+      <label class="persona-card__field">
+        <span>Correo</span>
+        <input type="email" formControlName="email" maxlength="150" />
+      </label>
+
+      <label class="persona-card__field">
+        <span>Barrio</span>
+        <select formControlName="barrio">
+          <option value="">Sin barrio</option>
+          @for (barrio of barrios(); track barrio.id) {
+            <option [value]="barrio.nombre">{{ barrio.nombre }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="persona-card__field">
+        <span>Sección / sector</span>
+        <select formControlName="seccion">
+          <option value="">Sin sección</option>
+          @for (seccion of secciones(); track seccion.id) {
+            <option [value]="seccion.nombre">{{ seccion.nombre }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="persona-card__field">
+        <span>Fecha de alta</span>
+        <input type="date" formControlName="fechaAlta" />
+      </label>
+
+      <label class="persona-card__field">
+        <span>Estatus</span>
+        <select formControlName="estatus">
+          @for (opcion of estatusOptions; track opcion) {
+            <option [value]="opcion">{{ opcion }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="persona-card__field persona-card__field--full">
+        <span>Dirección</span>
+        <input type="text" formControlName="direccion" maxlength="255" />
+      </label>
+
+      <label class="persona-card__field persona-card__field--full">
+        <span>Observaciones</span>
+        <textarea formControlName="observaciones" rows="3"></textarea>
+      </label>
+    </div>
+
+    @if (errorMessage()) {
+      <p class="persona-card__error">{{ errorMessage() }}</p>
+    }
+
+    @if (successMessage()) {
+      <p class="persona-card__success">{{ successMessage() }}</p>
+    }
+
+    <div class="persona-card__actions">
+      <button type="button" class="persona-card__cancel" (click)="onCancel()">Cancelar</button>
+      <button type="submit" class="persona-card__submit" [disabled]="personaForm.invalid || loading()">
+        {{ loading() ? 'Guardando…' : 'Guardar' }}
+      </button>
+    </div>
+  </form>
+</div>

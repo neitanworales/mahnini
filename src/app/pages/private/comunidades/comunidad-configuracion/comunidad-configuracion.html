@@ -1,0 +1,138 @@
+<div class="config-page">
+  <a class="config-page__back" [routerLink]="volverRuta()">‹ Volver</a>
+
+  @if (errorMessage()) {
+    <p class="config-page__error">{{ errorMessage() }}</p>
+  } @else {
+    <header class="config-page__header">
+      <h1 class="config-page__title">Configurar comunidad</h1>
+      @if (comunidad(); as c) {
+        <p class="config-page__subtitle">{{ c.nombre }} · {{ c.clave }}</p>
+      }
+    </header>
+
+    <section class="config-card config-card--full">
+      <h2 class="config-card__title">Datos generales</h2>
+
+      <form class="config-datos" [formGroup]="datosForm" (ngSubmit)="guardarDatos()">
+        <label class="config-datos__field">
+          <span>Clave</span>
+          <input type="text" formControlName="clave" maxlength="30" />
+        </label>
+
+        <label class="config-datos__field">
+          <span>Nombre</span>
+          <input type="text" formControlName="nombre" maxlength="150" />
+        </label>
+
+        <label class="config-datos__field">
+          <span>Municipio</span>
+          <input type="text" formControlName="municipio" maxlength="120" />
+        </label>
+
+        <label class="config-datos__field">
+          <span>Estado</span>
+          <input type="text" formControlName="estado" maxlength="120" />
+        </label>
+
+        <label class="config-datos__field">
+          <span>Teléfono</span>
+          <input type="tel" formControlName="telefono" maxlength="30" />
+        </label>
+
+        <label class="config-datos__field">
+          <span>Correo</span>
+          <input type="email" formControlName="email" maxlength="150" />
+        </label>
+
+        <label class="config-datos__field">
+          <span>Código postal</span>
+          <input type="text" formControlName="codigoPostal" maxlength="10" />
+        </label>
+
+        <label class="config-datos__field config-datos__field--full">
+          <span>Dirección</span>
+          <input type="text" formControlName="direccion" maxlength="255" />
+        </label>
+
+        <label class="config-datos__field config-datos__field--full">
+          <span>Descripción</span>
+          <textarea formControlName="descripcion" rows="3"></textarea>
+        </label>
+
+        <label class="config-datos__checkbox config-datos__field--full">
+          <input type="checkbox" formControlName="activo" />
+          <span>Activa</span>
+        </label>
+
+        @if (datosError()) {
+          <p class="config-card__error config-datos__field--full">{{ datosError() }}</p>
+        }
+
+        @if (datosGuardado()) {
+          <p class="config-datos__success config-datos__field--full">{{ datosGuardado() }}</p>
+        }
+
+        <div class="config-datos__field--full">
+          <button type="submit" class="config-datos__submit" [disabled]="datosForm.invalid || datosLoading()">
+            {{ datosLoading() ? 'Guardando…' : 'Guardar cambios' }}
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <div class="config-page__grid">
+      <section class="config-card">
+        <h2 class="config-card__title">Barrios</h2>
+
+        <form class="config-card__form" [formGroup]="barrioForm" (ngSubmit)="agregarBarrio()">
+          <input type="text" formControlName="nombre" placeholder="Nombre del barrio" maxlength="120" />
+          <button type="submit" [disabled]="barrioForm.invalid">Agregar</button>
+        </form>
+
+        @if (errorBarrio()) {
+          <p class="config-card__error">{{ errorBarrio() }}</p>
+        }
+
+        @if (barrios().length === 0) {
+          <p class="config-card__hint">Aún no hay barrios registrados.</p>
+        } @else {
+          <ul class="config-card__list">
+            @for (barrio of barrios(); track barrio.id) {
+              <li>
+                <span>{{ barrio.nombre }}</span>
+                <button type="button" class="config-card__remove" (click)="eliminarBarrio(barrio)">Eliminar</button>
+              </li>
+            }
+          </ul>
+        }
+      </section>
+
+      <section class="config-card">
+        <h2 class="config-card__title">Secciones / sector</h2>
+
+        <form class="config-card__form" [formGroup]="seccionForm" (ngSubmit)="agregarSeccion()">
+          <input type="text" formControlName="nombre" placeholder="Nombre de la sección/sector" maxlength="120" />
+          <button type="submit" [disabled]="seccionForm.invalid">Agregar</button>
+        </form>
+
+        @if (errorSeccion()) {
+          <p class="config-card__error">{{ errorSeccion() }}</p>
+        }
+
+        @if (secciones().length === 0) {
+          <p class="config-card__hint">Aún no hay secciones registradas.</p>
+        } @else {
+          <ul class="config-card__list">
+            @for (seccion of secciones(); track seccion.id) {
+              <li>
+                <span>{{ seccion.nombre }}</span>
+                <button type="button" class="config-card__remove" (click)="eliminarSeccion(seccion)">Eliminar</button>
+              </li>
+            }
+          </ul>
+        }
+      </section>
+    </div>
+  }
+</div>

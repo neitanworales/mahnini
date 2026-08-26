@@ -1,0 +1,241 @@
+<div class="expediente-page">
+  <h1 class="expediente-page__title">Expediente</h1>
+
+  <div class="expediente-search">
+    <input
+      type="text"
+      class="expediente-search__input"
+      placeholder="Buscar por número de control, nombre, apellidos, barrio, sección o dirección…"
+      [formControl]="searchControl"
+    />
+
+    @if (buscando()) {
+      <p class="expediente-page__hint">Buscando…</p>
+    } @else if (errorBusqueda()) {
+      <p class="expediente-page__error">{{ errorBusqueda() }}</p>
+    } @else if (searchControl.value.trim().length > 0 && searchControl.value.trim().length < 2) {
+      <p class="expediente-page__hint">Escribe al menos 2 caracteres para buscar.</p>
+    } @else if (searchControl.value.trim().length >= 2 && resultados().length === 0) {
+      <p class="expediente-page__hint">No se encontraron personas con esa búsqueda.</p>
+    }
+
+    @if (resultados().length > 0) {
+      <ul class="expediente-search__results">
+        @for (persona of resultados(); track persona.id) {
+          <li>
+            <button type="button" class="expediente-search__result" (click)="seleccionar(persona)">
+              <strong>{{ persona.nombre }} {{ persona.apellidoPaterno }} {{ persona.apellidoMaterno }}</strong>
+              <span>{{ persona.numeroControl }} · {{ persona.barrio || 'Sin barrio' }}</span>
+            </button>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+
+  @if (cargandoDetalle()) {
+    <p class="expediente-page__hint">Cargando expediente…</p>
+  }
+
+  @if (errorDetalle()) {
+    <p class="expediente-page__error">{{ errorDetalle() }}</p>
+  }
+
+  @if (personaSeleccionada(); as persona) {
+    <section class="expediente-detalle">
+      <header class="expediente-detalle__header">
+        <div>
+          <h2 class="expediente-detalle__nombre">{{ persona.nombre }} {{ persona.apellidoPaterno }} {{ persona.apellidoMaterno }}</h2>
+          <p class="expediente-detalle__meta">N.º control: {{ persona.numeroControl }} · Estatus: {{ persona.estatus }}</p>
+        </div>
+        <button type="button" class="expediente-detalle__tarjeta" (click)="toggleTarjeta()">
+          {{ mostrarTarjeta() ? 'Ocultar tarjeta comunitaria' : 'Ver tarjeta comunitaria' }}
+        </button>
+        <button type="button" class="expediente-detalle__cerrar" (click)="limpiarSeleccion()">Cerrar</button>
+      </header>
+
+      <div class="expediente-detalle__grid">
+        <div class="expediente-datos">
+          <h3>Datos de registro</h3>
+          <dl>
+            <dt>Teléfono</dt><dd>{{ persona.telefono || '—' }}</dd>
+            <dt>Correo</dt><dd>{{ persona.email || '—' }}</dd>
+            <dt>Dirección</dt><dd>{{ persona.direccion || '—' }}</dd>
+            <dt>Barrio</dt><dd>{{ persona.barrio || '—' }}</dd>
+            <dt>Sección</dt><dd>{{ persona.seccion || '—' }}</dd>
+            <dt>Fecha de alta</dt><dd>{{ persona.fechaAlta || '—' }}</dd>
+          </dl>
+        </div>
+
+        @if (resumen(); as r) {
+          <div class="expediente-balance">
+            <h3>Balance</h3>
+            <div class="expediente-balance__cards">
+              <div class="expediente-balance__card">
+                <span class="expediente-balance__label">Total pagado</span>
+                <span class="expediente-balance__value">{{ r.totalPagado | currency }}</span>
+              </div>
+              <div class="expediente-balance__card expediente-balance__card--danger">
+                <span class="expediente-balance__label">Adeudo actual</span>
+                <span class="expediente-balance__value">{{ r.totalAdeudo | currency }}</span>
+              </div>
+              <div class="expediente-balance__card">
+                <span class="expediente-balance__label">Exento</span>
+                <span class="expediente-balance__value">{{ r.totalExento | currency }}</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      @if (mostrarTarjeta()) {
+        <div class="expediente-section">
+          @if (cargandoTarjeta()) {
+            <p class="expediente-page__hint">Cargando tarjeta comunitaria…</p>
+          } @else if (errorTarjeta()) {
+            <p class="expediente-page__error">{{ errorTarjeta() }}</p>
+          } @else {
+            <div class="tarjeta">
+              <button type="button" class="tarjeta__imprimir expediente-section--no-print" (click)="imprimirTarjeta()">Imprimir</button>
+
+              <header class="tarjeta__header">
+                <p class="tarjeta__marca">MA HNINI</p>
+                <p class="tarjeta__nombre">{{ persona.nombre }} {{ persona.apellidoPaterno }} {{ persona.apellidoMaterno }}</p>
+                <p class="tarjeta__clave">Clave: {{ persona.numeroControl }}</p>
+                <p class="tarjeta__titulo">TARJETA COMUNITARIA {{ tarjetaAnio() }}</p>
+              </header>
+
+              <section class="tarjeta__seccion">
+                <h4>Reuniones</h4>
+                @if (tarjetaReuniones().length === 0) {
+                  <p class="tarjeta__vacio">Sin reuniones registradas en {{ tarjetaAnio() }}.</p>
+                } @else {
+                  @for (reunion of tarjetaReuniones(); track reunion.id) {
+                    <div class="tarjeta__fila">
+                      <span>{{ reunion.fecha }}</span>
+                      <span [class.tarjeta__check--ok]="reunion.estatus === 'ASISTIO'" [class.tarjeta__check--mal]="reunion.estatus !== 'ASISTIO'">
+                        {{ reunion.estatus === 'ASISTIO' ? '✓' : '✗' }}
+                      </span>
+                    </div>
+                  }
+                }
+              </section>
+
+              <section class="tarjeta__seccion">
+                <h4>Faenas</h4>
+                @if (tarjetaFaenas().length === 0) {
+                  <p class="tarjeta__vacio">Sin faenas registradas en {{ tarjetaAnio() }}.</p>
+                } @else {
+                  @for (faena of tarjetaFaenas(); track faena.id) {
+                    <div class="tarjeta__fila">
+                      <span>{{ faena.fecha }}</span>
+                      <span [class.tarjeta__check--ok]="faena.estatus === 'ASISTIO'" [class.tarjeta__check--mal]="faena.estatus !== 'ASISTIO'">
+                        {{ faena.estatus === 'ASISTIO' ? '✓' : '✗' }}
+                      </span>
+                      @if (faena.estatus !== 'ASISTIO' && faena.cargoMonto) {
+                        <span class="tarjeta__multa">{{ faena.cargoMonto | currency }}</span>
+                      }
+                    </div>
+                  }
+                }
+              </section>
+
+              @if (tarjetaCooperacion(); as coop) {
+                <section class="tarjeta__seccion">
+                  <h4>Cooperación anual</h4>
+                  <div class="tarjeta__fila"><span>Asignado</span><span>{{ coop.asignado | currency }}</span></div>
+                  <div class="tarjeta__fila"><span>Pagado</span><span>{{ coop.pagado | currency }}</span></div>
+                  <div class="tarjeta__fila"><span>Pendiente</span><span>{{ coop.pendiente | currency }}</span></div>
+                </section>
+              }
+
+              @if (tarjetaObras().length > 0) {
+                @for (obra of tarjetaObras(); track obra.nombre) {
+                  <section class="tarjeta__seccion">
+                    <h4>Obra</h4>
+                    <p class="tarjeta__obra-nombre">{{ obra.nombre }}</p>
+                    <div class="tarjeta__fila"><span>Asignado</span><span>{{ obra.asignado | currency }}</span></div>
+                    <div class="tarjeta__fila"><span>Pagado</span><span>{{ obra.pagado | currency }}</span></div>
+                    <div class="tarjeta__fila"><span>Estado</span><span>{{ obra.estado }}</span></div>
+                  </section>
+                }
+              }
+            </div>
+          }
+        </div>
+      }
+
+      <div class="expediente-section">
+        <h3>Pagos realizados</h3>
+        @if (pagos().length === 0) {
+          <p class="expediente-page__hint">Sin pagos registrados.</p>
+        } @else {
+          <table class="expediente-table">
+            <thead>
+              <tr><th>Fecha</th><th>Monto</th><th>Método</th><th>Referencia</th><th>Estatus</th></tr>
+            </thead>
+            <tbody>
+              @for (pago of pagos(); track pago.id) {
+                <tr>
+                  <td>{{ pago.fecha }}</td>
+                  <td>{{ pago.montoTotal | currency }}</td>
+                  <td>{{ pago.metodoPago }}</td>
+                  <td>{{ pago.referencia || '—' }}</td>
+                  <td>{{ pago.estatus }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+      </div>
+
+      <div class="expediente-section">
+        <h3>Adeudos pendientes</h3>
+        @if (adeudos().length === 0) {
+          <p class="expediente-page__hint">Sin adeudos pendientes.</p>
+        } @else {
+          <table class="expediente-table">
+            <thead>
+              <tr><th>Concepto</th><th>Año</th><th>Vencimiento</th><th>Monto</th><th>Saldo</th><th>Estatus</th></tr>
+            </thead>
+            <tbody>
+              @for (cargo of adeudos(); track cargo.id) {
+                <tr>
+                  <td>{{ cargo.conceptoNombre }}</td>
+                  <td>{{ cargo.anio }}</td>
+                  <td>{{ cargo.fechaVencimiento || '—' }}</td>
+                  <td>{{ cargo.monto | currency }}</td>
+                  <td>{{ cargo.saldo | currency }}</td>
+                  <td>{{ cargo.estatus }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+      </div>
+
+      <div class="expediente-section">
+        <h3>Pagos exentos</h3>
+        @if (exentos().length === 0) {
+          <p class="expediente-page__hint">Sin cargos exentos.</p>
+        } @else {
+          <table class="expediente-table">
+            <thead>
+              <tr><th>Concepto</th><th>Año</th><th>Monto</th><th>Estatus</th></tr>
+            </thead>
+            <tbody>
+              @for (cargo of exentos(); track cargo.id) {
+                <tr>
+                  <td>{{ cargo.conceptoNombre }}</td>
+                  <td>{{ cargo.anio }}</td>
+                  <td>{{ cargo.monto | currency }}</td>
+                  <td>{{ cargo.estatus }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+      </div>
+    </section>
+  }
+</div>

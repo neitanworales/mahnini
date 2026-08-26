@@ -1,0 +1,67 @@
+<div class="comunidades-page">
+  <header class="comunidades-page__header">
+    <h1 class="comunidades-page__title">Comunidades</h1>
+    <a class="comunidades-page__new" routerLink="/comunidades/nueva">+ Nueva comunidad</a>
+  </header>
+
+  @if (!loading() && !errorMessage() && comunidades().length > 0) {
+    <div class="comunidades-page__filters">
+      <input
+        type="text"
+        class="comunidades-page__search"
+        placeholder="Buscar por clave, nombre, municipio o estado…"
+        aria-label="Buscar comunidades"
+        [value]="busqueda()"
+        (input)="busqueda.set($any($event.target).value)"
+      />
+      <select aria-label="Filtrar por estatus" [value]="filtroEstatus()" (change)="filtroEstatus.set($any($event.target).value)">
+        <option value="TODAS">Todas</option>
+        <option value="ACTIVAS">Activas</option>
+        <option value="INACTIVAS">Inactivas</option>
+      </select>
+    </div>
+  }
+
+  @if (loading()) {
+    <p class="comunidades-page__hint">Cargando…</p>
+  } @else if (errorMessage()) {
+    <p class="comunidades-page__error">{{ errorMessage() }}</p>
+  } @else if (comunidades().length === 0) {
+    <p class="comunidades-page__hint">Aún no hay comunidades registradas.</p>
+  } @else if (comunidadesFiltradas().length === 0) {
+    <p class="comunidades-page__hint">Ninguna comunidad coincide con la búsqueda.</p>
+  } @else {
+    <table class="comunidades-table">
+      <thead>
+        <tr>
+          <th>Clave</th>
+          <th>Nombre</th>
+          <th>Municipio</th>
+          <th>Estado</th>
+          <th>Teléfono</th>
+          <th>Estatus</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (comunidad of comunidadesFiltradas(); track comunidad.id) {
+          <tr>
+            <td>{{ comunidad.clave }}</td>
+            <td>{{ comunidad.nombre }}</td>
+            <td>{{ comunidad.municipio || '—' }}</td>
+            <td>{{ comunidad.estado || '—' }}</td>
+            <td>{{ comunidad.telefono || '—' }}</td>
+            <td>
+              <span class="comunidades-badge" [class.comunidades-badge--inactive]="!comunidad.activo">
+                {{ comunidad.activo ? 'Activa' : 'Inactiva' }}
+              </span>
+            </td>
+            <td>
+              <a [routerLink]="['/comunidades', comunidad.id, 'configurar']">Configurar</a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>
