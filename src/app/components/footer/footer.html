@@ -1,14 +1,54 @@
 <footer class="app-footer">
   <div class="app-footer__inner">
-    <nav class="sitemap" aria-label="Mapa del sitio">
-      <h2 class="sitemap__title">Mapa del sitio</h2>
-      <ul class="sitemap__list">
-        <li><a routerLink="/home">Home</a></li>
-        <li><a routerLink="/dashboard">Dashboard</a></li>
-        <li><a routerLink="/login">Iniciar sesión</a></li>
-      </ul>
-    </nav>
+    <div class="app-footer__grid">
+      <div class="footer-brand">
+        <p class="footer-brand__name">MA HNINI</p>
+        <p class="footer-brand__tagline">Mi Comunidad</p>
+        <p class="footer-brand__text">
+          La administración de tu comunidad, en un solo lugar: personas, faenas, reuniones,
+          cooperaciones, obras y pagos.
+        </p>
+        <a class="footer-brand__contact" href="mailto:contacto@mahnini.mx?subject=Quiero%20una%20demostraci%C3%B3n">
+          contacto&#64;mahnini.mx
+        </a>
+      </div>
 
-    <p class="app-footer__copy">© {{ currentYear }} Mahnini. Todos los derechos reservados.</p>
+      <nav class="sitemap" aria-label="Producto">
+        <h2 class="sitemap__title">Producto</h2>
+        <ul class="sitemap__list">
+          <li><a routerLink="/home" fragment="que-es">Qué es Ma Hnini</a></li>
+          <li><a routerLink="/home" fragment="buscar">Buscar una persona</a></li>
+          <li><a routerLink="/home" fragment="tarjeta-digital">Tarjeta comunitaria</a></li>
+          <li><a routerLink="/home" fragment="faenas">Faenas</a></li>
+          <li><a routerLink="/home" fragment="reuniones">Reuniones</a></li>
+          <li><a routerLink="/home" fragment="pagos">Pagos</a></li>
+          <li><a routerLink="/home" fragment="reportes">Reportes</a></li>
+        </ul>
+      </nav>
+
+      <nav class="sitemap" aria-label="Comunidad">
+        <h2 class="sitemap__title">Comunidad</h2>
+        <ul class="sitemap__list">
+          <li><a routerLink="/home" fragment="multi-comunidad">Multi-comunidad</a></li>
+          <li><a routerLink="/home" fragment="usuarios-permisos">Usuarios y permisos</a></li>
+          <li><a routerLink="/home" fragment="seguridad">Seguridad y trazabilidad</a></li>
+          <li><a routerLink="/home" fragment="historial">Historial</a></li>
+        </ul>
+      </nav>
+
+      <nav class="sitemap" aria-label="Acceso">
+        <h2 class="sitemap__title">Acceso</h2>
+        <ul class="sitemap__list">
+          <li><a routerLink="/login">Iniciar sesión</a></li>
+          <li><a routerLink="/dashboard">Dashboard</a></li>
+          <li><a href="mailto:contacto@mahnini.mx?subject=Quiero%20una%20demostraci%C3%B3n">Solicitar demostración</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="app-footer__bottom">
+      <p class="app-footer__copy">© {{ currentYear }} Mahnini. Todos los derechos reservados.</p>
+      <p class="app-footer__conceptos">Personas · Faenas · Reuniones · Cooperaciones · Obras · Pagos</p>
+    </div>
   </div>
 </footer>

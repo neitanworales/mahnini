@@ -1,0 +1,14 @@
+# Sube este archivo como public_html/mahnini/api/.htaccess (junto a bootstrap.php,
+# src/, routes/, database/, .env), NO dentro de public/. El subdominio apunta a esta
+# carpeta (public_html/mahnini/api/), asi que sin esto bootstrap.php, src/ y .env
+# quedarian accesibles directo por URL. Bloquea todo lo que no pase por /public/.
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} !/public/
+    RewriteRule ^ - [F,L]
+</IfModule>
+
+<FilesMatch "\.(env|sql|log|md|sh)$">
+    Require all denied
+</FilesMatch>

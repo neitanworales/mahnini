@@ -1,0 +1,11 @@
+RewriteEngine On
+
+# Apache no reenvia el header Authorization a PHP por defecto (bootstrap.php ya
+# tiene un respaldo via getallheaders(), asi que no dependemos de CGIPassAuth
+# porque esa directiva da 500 en hosts donde no esta permitida/soportada).
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
